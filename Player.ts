@@ -54,7 +54,7 @@ class DP {
         gl.bD(34962, new Int8Array([-3, 1, 1, -3, 1, 1]), 35044);
 
         const dt = () => {
-            return  (new Date / 1e5);
+            return performance.now() / 1000;
         }
         let ts = dt();
         let L = () => {
@@ -94,7 +94,16 @@ uniform vec2 resolution;
 
 out vec4 fragColor;
 void main( void ) {
-    fragColor = vec4(1.,0.2,0.2,1.0);
+
+    vec2 position = ( gl_FragCoord.xy / resolution.xy ) / 4.0;
+
+    float color = 0.0;
+	color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+	color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+	color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+	color *= sin( time / 10.0 ) * 0.5;
+
+    fragColor =  vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
 }
 `
 );
