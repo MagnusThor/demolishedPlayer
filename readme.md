@@ -2,7 +2,7 @@
 
 ## Abstract
 
-At a total weight excluding your custom vertex, and fragment shader code demploshedPlayer has a minified weight of less than 500 bytes .
+At a total weight excluding your custom vertex, and fragment shader code demolishedPlayer has a minified weight of less than 500 bytes .
 You are able to attach your own shader as well as provide 1-n textures and provide audio in any format you prefer.  In
 this case it will of coz exceed that size :-)
 
