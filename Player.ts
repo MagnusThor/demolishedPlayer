@@ -1,110 +1,68 @@
 class DP {
+    static I(c: HTMLCanvasElement, vs: string, fs: string, x: number, y: number,
+        b?: any, w?: any
+    ) {
+        let g =
+            c.getContext('webgl2') as any;
+        for (var i in g) // Hash WebGL method names into shorter once, will cause trouble i know
+            g[i[0] + i[6]] = g[i];
 
-    static I(c: HTMLCanvasElement, vs: string, fs: string) {
-        let ca = {
-            preserveDrawingBuffer: true
-        };
+        // TODO: Map uniformN to g.N ? 
+        g.f1 = g.uniform1f;
+        g.f2 = g.uniform2f;
+        g.mm = g.generateMipmap;
+        g.i1 = g.uniform1i;
 
-        let gl =
-            c.getContext('webgl2', ca) ||
-            c.getContext('webgl', ca) ||
-            c.getContext('experimental-webgl', ca) as any;
-        // hash WebGL Methods
-        for (var i in gl)
-            gl[i[0] + i[6]] = gl[i];
-
-        gl.f1 = gl.uniform1f;
-        gl.f2 = gl.uniform2f;
-
-        const program = gl.cP();
-        let frag = gl.cS(35633);
-
+        let it = Object.keys(b ? b : {});
+        const p = g.cP();
+        let s = g.cS(35633);
         // setup vertex
-        gl.sS(frag, vs);
-        gl.ce(frag);
-        gl.aS(program, frag);
+        g.sS(s, vs);
+        g.ce(s);
+        g.aS(p, s);
         // setup fragment
-
-        let vert = gl.cS(35632);
-
-        gl.sS(
-            vert, fs);
-
-        gl.ce(vert);
-
-        gl.aS(program, vert);
-
-
-        // if (!gl.getShaderParameter(frag, gl.COMPILE_STATUS)) {
-        //     gl.getShaderInfoLog(frag).trim().split("\n").forEach((l: string) =>
+        s = g.cS(35632);
+        g.sS(s, fs);
+        g.ce(s);
+        g.aS(p, s);
+        // // DEBUG if fails.    
+        // if (!g.getShaderParameter(f, g.COMPILE_STATUS)) {
+        //     g.getShaderInfoLog(f).trim().split("\n").forEach((l: string) =>
         //         console.warn("[shader] " + l))
         //     throw new Error("Error while compiling shader")
         // };
+        g.lo(p);
+        g.ug(p);
+        g.bf(34962, g.cB());
+        g.eV(0);
+        g.vA(0, 2, 5120, 0, 0, 0);
+        g.bD(34962, new Int8Array([-3, 1, 1, -3, 1, 1]), 35044);
 
-        gl.lo(program);
-        gl.ug(program);
-
-        gl.bf(34962, gl.cB());
-
-        //let vp = gl.gr(program,"pos");
-
-        gl.eV(0);
-        gl.vA(0, 2, 5120, 0, 0, 0);
-
-        gl.bD(34962, new Int8Array([-3, 1, 1, -3, 1, 1]), 35044);
-
+        // setup and load textures if provided
+        it.forEach((k, i) => {
+            const t = g.cT();
+            const m = new Image();
+            m.onload = () => {
+                g.bx(3553, t);
+                g.tg(3553, 0, 6408, 512, 512, 0, 6408, 5121, m)
+                g.mm(3553);
+            }
+            m.src = b[k].d;
+        });
         const dt = () => {
             return performance.now() / 1000;
         }
-        let ts = dt();
+        let tm = dt();
         let L = () => {
-            gl.f1(gl.gf(program, 'time'), dt() - ts);
-
-            gl.f2(gl.gf(program, 'resolution'), innerHeight, innerWidth);
-            gl.dr(6, 0, 3);
-
+            g.f1(g.gf(p, 'time'), dt() - tm);
+            g.f2(g.gf(p, 'resolution'), x, y);
+            it.forEach((k, i) => {
+                g.aT(33984 + i);
+                g.i1(g.gf(p, k), i);
+            });
+            g.dr(6, 0, 3);
             requestAnimationFrame(L);
         };
-        L();
-
+        L();              
     }
 }
-
-DP.I(document.querySelector("canvas"),
-    `#version 300 es
-#ifdef GL_ES
-precision highp float;
-precision highp int;
-precision mediump sampler3D;
-#endif
-layout(location = 0) in vec2 pos; 
-out vec4 fragColor;
-void main() { 
-	gl_Position = vec4(pos.xy,0.0,1.0);
-}`,
-
-    `#version 300 es
-#ifdef GL_ES
-precision highp float;
-precision highp int;
-precision mediump sampler3D;
-#endif
-uniform float time;
-uniform vec2 resolution;
-
-out vec4 fragColor;
-void main( void ) {
-
-    vec2 position = ( gl_FragCoord.xy / resolution.xy ) / 4.0;
-
-    float color = 0.0;
-	color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
-	color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
-	color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
-	color *= sin( time / 10.0 ) * 0.5;
-
-    fragColor =  vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
-}
-`
-);
-
