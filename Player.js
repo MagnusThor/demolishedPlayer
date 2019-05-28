@@ -15,10 +15,24 @@ var DP = (function () {
         g.sS(s, vs);
         g.ce(s);
         g.aS(p, s);
+        if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
+            g.getShaderInfoLog(s).trim().split("\n").forEach(function (l) {
+                return console.warn("[shader] " + l);
+            });
+            throw new Error("Error while compiling vertex");
+        }
+        ;
         s = g.cS(35632);
         g.sS(s, fs);
         g.ce(s);
         g.aS(p, s);
+        if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
+            g.getShaderInfoLog(s).trim().split("\n").forEach(function (l) {
+                return console.warn("[shader] " + l);
+            });
+            throw new Error("Error while compiling fragment");
+        }
+        ;
         g.lo(p);
         g.ug(p);
         g.bf(34962, g.cB());
@@ -40,7 +54,7 @@ var DP = (function () {
         };
         var tm = dt();
         var L = function () {
-            g.f1(g.gf(p, 'time'), dt() - tm);
+            g.f1(g.gf(p, 'time'), tm - dt());
             g.f2(g.gf(p, 'resolution'), x, y);
             it.forEach(function (k, i) {
                 g.aT(33984 + i);

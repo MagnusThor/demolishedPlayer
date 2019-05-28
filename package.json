@@ -1,11 +1,15 @@
 {
   "name": "demolishedplayer",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "tiny webgl thing for usage with demploshed.xyz and shader's in general",
   "main": "Player.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Magnus Thor",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "google-closure-compiler": "^20190513.0.0",
+    "npm": "^6.9.0"
+  }
 }

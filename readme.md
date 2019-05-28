@@ -1,12 +1,18 @@
-# demolishedPlayer 1.0.0
+# demolishedPlayer 1.0.1
 
 ## Abstract
 
-At a total weight excluding your custom vertex, and fragment shader code demolishedPlayer has a minified weight of less than 500 bytes .
-You are able to attach your own shader as well as provide 1-n textures and provide audio in any format you prefer.  In
-this case it will of coz exceed that size :-)
+At a total weight excluding your custom vertex, and fragment shader code demolishedPlayer has a minified weight of less than 500 bytes.
+
+You are able to attach your own shader as well as provide 1-n textures and provide audio in any format you prefer. 
+
+Navigate to https://magnusthor.github.io/demolishedPlayer/ to see an example.
 
   *Enjoy*
+
+## Install
+
+Just clone repo, copy files  or what ever you want, it is quite simple.
 
 ## How to set up at player
 
@@ -44,19 +50,19 @@ Provide any audio that implements a method for playback called  .play() or just 
 
 ## Plans,todo's and thoughts..
 
-1. Include shader minificaion, possible on the ctrt-alt-delete stuff.
-2. Include PNGHTML packers..
-3. Minify and slim (if possible) the SonantLive player (Synth).. yes, its old but stil rocks the JS Scene!
+1. Automate shader minificaion, possible on the ctrt-alt-test stuff. (https://github.com/laurentlb/Shader_Minifier)
+2. Include PNGHTML packers such as JsExe or pnginator.
+3. Minify and slim (if possible) the SonantLive player (Synth).. yes, its old but still rocks the JS scene ?
 4. Implement possibillity to use custom uniforms.
 5. Keep this as tiny and simple as possible, there is lots of stuff doing crazy stuff out there already so no reason try beat that.   
 
-You wart to particpate in making this better, just let me know.
+You wart to particpate in making this better, just let me know. here or just shot an email.
 
 ## Greetings,Salutes
 
-Grettings to the Shadertoy team, Mr Doob and the team of old golden glslsandbox.com and my "local office brought to you by Mr  Merdahad Fatahzadeh" for providing me an office and friendship while coding. Major greets ofcoz goes to Hanna E for all love.
+Grettings to the http://shadertoy.com team, Mr Doob and the team of old golden http.//glslsandbox.com and my "local office brought to you by Mr  Merdahad Fatahzadeh" for providing me an office and friendship while coding. Major greets ofcoz goes to Hanna E for all love.
 
-Textutes as stolen from Shadertoy so greets to who ever mate it, as well as the example tune is composed by Björn Lynne (Lynne Publishing) has it origin from  https://www.youtube.com/watch?v=ILP5SSPhJqs ,as master pice!
+Textutes as stolen from Shadertoy so greets to who ever made it, as well as the example tune is composed by Björn Lynne (Lynne Publishing) has it origin from  https://www.youtube.com/watch?v=ILP5SSPhJqs ,as masterpice!
 
 
 *Kind reagds, Magnus 'Bagzy' Thor*
