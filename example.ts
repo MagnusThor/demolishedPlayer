@@ -1,9 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-
-
-
-    DP.I(document.querySelector("canvas"),
+P.I(document.querySelector("canvas"),
         `#version 300 es
 #ifdef GL_ES
 precision highp float;
@@ -14,9 +11,7 @@ layout(location = 0) in vec2 pos;
 out vec4 fragColor;
 void main() { 
 	gl_Position = vec4(pos.xy,0.0,1.0);
-}`,
-
-        `#version 300 es
+}`,`#version 300 es
 #ifdef GL_ES
 precision highp float;
 precision highp int;
@@ -26,12 +21,12 @@ uniform float time;uniform vec2 resolution;uniform sampler2D iChannelA,iChannelB
 
 
 `, innerWidth, innerHeight,
-        {
-            "iChannel0": {
-                "d": "iChannel0.png"
-            }
-        },
-        document.querySelector("audio")
+       {},
+        (c:any,p:any)=> {
+            console.log("Started..",c,p);
+            // try get as an sample a unifrom
+            //console.log(c.gf(p, 'resolution'));         
+        }
     );
 
 });

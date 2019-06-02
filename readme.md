@@ -18,12 +18,13 @@ Just clone repo, copy files  or what ever you want, it is quite simple.
 
 Just include demolishedPlayer (Player.jss), create a canvas element, add a shader and execute.
 
-    DP.I(canvas,w,h,vs,fs,textures,audio);
+    DP.I(canvas,w,h,vs,fs,textures,callBack);
 
 
 Or just have a look at the example.ts ( .js ) file in the repo.
 
-Where *canvas* is the target element. w & h is the resolution passed to the shader ( uniform ), *vs* is the vertexShader and *fs* is your fragmentShader. *textures* is an object of containg name and data for textures to be used, see ( textures below). *audio* is your prefered audio playback/format, where audio.play() is called upon start automaticly depending of used format.
+Where *canvas* is the target element. w & h is the resolution passed to the shader ( uniform ), *vs* is the vertexShader and *fs* is your fragmentShader. *textures* is an object of containg name and data for textures to be used, see ( textures below). *callback* is called when 
+player is setup and started.
 
 ## Textures
 
@@ -42,11 +43,6 @@ the key myst have an corrisponding sampler2D uniform such as
 
 
     uniform sampler2D iChannel0
-
-
-## Audio (music)
-
-Provide any audio that implements a method for playback called  .play() or just and HTML Audio element that autoplays...
 
 ## Plans,todo's and thoughts..
 
