@@ -2,11 +2,19 @@
 
 ## Abstract
 
+### Shaders 
+
 At a total weight excluding your custom vertex, and fragment shader code demolishedPlayer has a minified weight of less than 500 bytes.
 
 You are able to attach your own shader as well as provide 1-n textures and provide audio in any format you prefer. 
 
 Navigate to https://magnusthor.github.io/demolishedPlayer/ to see an example.
+
+### Audio & GPU Sound 
+
+demolishedPlayer also contains a tiny function that alows you to generate audio using the GPU and stream it to the audio card using 
+WebAudio. see /suhth/ folder for the first version. 
+
 
   *Enjoy*
 
@@ -14,7 +22,7 @@ Navigate to https://magnusthor.github.io/demolishedPlayer/ to see an example.
 
 Just clone repo, copy files  or what ever you want, it is quite simple.
 
-## How to set up at player
+## How to set up at "shader" player
 
 Just include demolishedPlayer (Player.jss), create a canvas element, add a shader and execute.
 
@@ -53,6 +61,12 @@ the key myst have an corrisponding sampler2D uniform such as
 5. Keep this as tiny and simple as possible, there is lots of stuff doing crazy stuff out there already so no reason try beat that.   
 
 You wart to particpate in making this better, just let me know. here or just shot an email.
+
+
+## Using the demolishedPlayer Synth
+
+TBD
+
 
 ## Greetings,Salutes
 

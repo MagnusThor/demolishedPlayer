@@ -1,3 +1,3 @@
-declare class DP {
-    static I(c: HTMLCanvasElement, vs: string, fs: string, x: number, y: number, b?: any, f?: Function): void;
+declare class P {
+    static I(c: HTMLCanvasElement, v: string, f: string, x: number, y: number, b?: any, u?: Function): void;
 }
