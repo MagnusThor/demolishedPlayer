@@ -53,6 +53,13 @@ void main(){
 }`;
 
 let generator = Synth.G(dsp, 44100, 128, 64);
-Synth.P(generator);
+
+document.querySelector("button").addEventListener("click", () => {
+    Synth.P(generator);
+
+
+
+});
+
 
 });
