@@ -1,13 +1,12 @@
 var P = (function () {
     function P() {
     }
-    P.I = function (c, v, f, x, y, b, u) {
+    P.I = function (c, v, f, x, y, b, u, k) {
         var g = c.getContext('webgl2');
         for (var i in g)
             g[i[0] + i[6]] = g[i];
         g.f1 = g.uniform1f;
         g.f2 = g.uniform2f;
-        g.mm = g.generateMipmap;
         g.i1 = g.uniform1i;
         var it = Object.keys(b ? b : {});
         var p = g.cP();
@@ -30,7 +29,7 @@ var P = (function () {
             m.onload = function () {
                 g.bx(3553, g.cT());
                 g.tg(3553, 0, 6408, 512, 512, 0, 6408, 5121, m);
-                g.mm(3553);
+                g.generateMipmap(3553);
             };
             m.src = b[k].d;
         });
@@ -39,8 +38,12 @@ var P = (function () {
         };
         var tm = dt();
         var L = function () {
-            g.f1(g.gf(p, 'time'), tm - dt());
+            var t = tm - dt();
+            g.f1(g.gf(p, 'time'), t);
             g.f2(g.gf(p, 'resolution'), x, y);
+            k && Object.keys(k).forEach(function (v) {
+                k[v](g.gf(p, v), g, p, t);
+            });
             it.forEach(function (k, i) {
                 g.aT(33984 + i);
                 g.i1(g.gf(p, k), i);

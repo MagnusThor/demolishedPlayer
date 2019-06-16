@@ -1,6 +1,6 @@
 class P {
     static I(c: HTMLCanvasElement, v: string, f: string, x: number, y: number,
-        b?: any, u?:Function
+        b?: any, u?:Function,k?:any
     ) {
         let g =
             c.getContext('webgl2') as any;
@@ -13,8 +13,9 @@ class P {
         // due to duplicates, ensure we have this methds available until we have a better hash version.        
         g.f1 = g.uniform1f;
         g.f2 = g.uniform2f;
-        g.mm = g.generateMipmap;
+       // g.mm = g.generateMipmap;
         g.i1 = g.uniform1i;
+        
         let it = Object.keys(b ? b : {});
         const p = g.cP();
         let s = g.cS(35633);
@@ -51,7 +52,7 @@ class P {
             m.onload = () => {
                 g.bx(3553,  g.cT());
                 g.tg(3553, 0, 6408, 512, 512, 0, 6408, 5121, m)
-                g.mm(3553);
+                g.generateMipmap(3553);
             }
             m.src = b[k].d;
         });
@@ -60,12 +61,19 @@ class P {
         }
         let tm = dt();
         let L = () => {
-            g.f1(g.gf(p, 'time'), tm - dt());
+            const t =  tm - dt();
+            g.f1(g.gf(p, 'time'), t);
             g.f2(g.gf(p, 'resolution'), x, y);
+            k && Object.keys(k).forEach( (v:any)  => {
+                k[v](g.gf(p, v),g,p,t);
+            });
+
             it.forEach((k, i) => {
                 g.aT(33984 + i);
                 g.i1(g.gf(p, k), i);
             });
+
+          
             g.dr(6, 0, 3);
             requestAnimationFrame(L);
         };
