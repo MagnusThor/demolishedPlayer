@@ -1,15 +1,16 @@
 {
   "name": "demolishedplayer",
-  "version": "1.0.1",
-  "description": "tiny webgl thing for usage with demploshed.xyz and shader's in general",
-  "main": "Player.js",
+  "version": "1.2.0",
+  "description": "tiny webgl rendeing engine thing primary for usage with demploshed.xyz, with small modifications you can use shadertoy.",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "shrink": "exit 1"
   },
   "author": "Magnus Thor",
   "license": "MIT",
   "devDependencies": {
-    "google-closure-compiler": "^20190513.0.0",
-    "npm": "^6.9.0"
+    "demolishedcompressor": "^1.0.3",
+    "google-closure-compiler": "^20190513.0.0"
   }
 }

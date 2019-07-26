@@ -1,9 +1,10 @@
-
-
- class TextureBase {
+ class TB {
     perm: Array<number>;
     constructor() {
         this.perm = this.seed(255);
+    }    
+    vec(x: number,y: number,z?: number,a?: number):Array<number>{
+        return [x,y,z,a].filter( (v) => {return v});
     }
     normalize(a: Array<number>): Array<number> {
         let l = this.length(a);
@@ -77,10 +78,10 @@
                     t.grad(p[BB + 1], x - 1, y - 1, z - 1)))));
     }
 }
-class Texture {
+class T {
     ctx: CanvasRenderingContext2D
     buffer: ImageData;
-    helpers: TextureBase;
+    helpers: TB;
     constructor(public width: number, public height: number) {
         let c = document.createElement("canvas") as HTMLCanvasElement;
         c.width = width;
@@ -89,10 +90,10 @@ class Texture {
         this.ctx.fillStyle = "#000000";
         this.ctx.fillRect(0, 0, this.width, this.height);
         this.buffer = this.ctx.getImageData(0, 0, this.width, this.height);
-        this.helpers = new TextureBase();
+        this.helpers = new TB();
     }
     static createTexture(width: number, height: number, fn: Function): string {
-        let instance = new Texture(width, height);
+        let instance = new T(width, height);
         instance.render(fn);
         return instance.toBase64();
     }
@@ -124,7 +125,7 @@ class Texture {
         return this.ctx.canvas.toDataURL("image/png");
     }
 }
- class TextureCanvas extends Texture{
+ class TC extends T{
         constructor(w:number,h:number){
             super(w,h);
         }
@@ -135,7 +136,7 @@ class Texture {
             return res;
         }
         static createTexture(width: number, height: number, fn: Function): string {
-            let instance = new TextureCanvas(width, height);
+            let instance = new TC(width, height);
             instance.draw(fn);
             return instance.toBase64();
         }

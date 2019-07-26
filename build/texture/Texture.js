@@ -11,48 +11,51 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var TextureBase = (function () {
-    function TextureBase() {
+var TB = (function () {
+    function TB() {
         this.perm = this.seed(255);
     }
-    TextureBase.prototype.normalize = function (a) {
+    TB.prototype.vec = function (x, y, z, a) {
+        return [x, y, z, a].filter(function (v) { return v; });
+    };
+    TB.prototype.normalize = function (a) {
         var l = this.length(a);
         l != 0 ? a = this.func(a, function (v, i) {
             return v / l;
         }) : a = a;
         return a;
     };
-    TextureBase.prototype.fract = function (v) {
+    TB.prototype.fract = function (v) {
         return v % 1;
     };
-    TextureBase.prototype.abs = function (a) {
+    TB.prototype.abs = function (a) {
         return a.map(function (v, i) { return Math.abs(v); });
     };
-    TextureBase.prototype.func = function (a, exp) {
+    TB.prototype.func = function (a, exp) {
         return a.map(function (v, i) { return exp(v, i); });
     };
-    TextureBase.prototype.toScale = function (v, w) {
+    TB.prototype.toScale = function (v, w) {
         var a = 0, b = w, c = -1, d = 1.;
         return (v - a) / (b - a) * (d - c) + c;
     };
     ;
-    TextureBase.prototype.dot = function (a, b) {
+    TB.prototype.dot = function (a, b) {
         return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
     };
-    TextureBase.prototype.length = function (a) {
+    TB.prototype.length = function (a) {
         return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
     };
-    TextureBase.prototype.fade = function (t) {
+    TB.prototype.fade = function (t) {
         return t * t * t * (t * (t * 6 - 15) + 10);
     };
-    TextureBase.prototype.lerp = function (t, a, b) { return a + t * (b - a); };
-    TextureBase.prototype.grad = function (hash, x, y, z) {
+    TB.prototype.lerp = function (t, a, b) { return a + t * (b - a); };
+    TB.prototype.grad = function (hash, x, y, z) {
         var h = hash & 15;
         var u = h < 8 ? x : y, v = h < 4 ? y : h == 12 || h == 14 ? x : z;
         return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
     };
-    TextureBase.prototype.scale = function (n) { return (1 + n) / 2; };
-    TextureBase.prototype.seed = function (n) {
+    TB.prototype.scale = function (n) { return (1 + n) / 2; };
+    TB.prototype.seed = function (n) {
         var p = [];
         for (var a = [], b = 0; n >= b; b++)
             a.push(b);
@@ -66,7 +69,7 @@ var TextureBase = (function () {
             p[n + i] = p[i] = a[i];
         return p;
     };
-    TextureBase.prototype.noise = function (x, y, z) {
+    TB.prototype.noise = function (x, y, z) {
         var t = this;
         var p = this.perm;
         var X = ~~(x) & 255, Y = ~~(y) & 255, Z = ~~(z) & 255;
@@ -77,10 +80,10 @@ var TextureBase = (function () {
         var A = p[X] + Y, AA = p[A] + Z, AB = p[A + 1] + Z, B = p[X + 1] + Y, BA = p[B] + Z, BB = p[B + 1] + Z;
         return t.scale(t.lerp(w, t.lerp(v, t.lerp(u, t.grad(p[AA], x, y, z), t.grad(p[BA], x - 1, y, z)), t.lerp(u, t.grad(p[AB], x, y - 1, z), t.grad(p[BB], x - 1, y - 1, z))), t.lerp(v, t.lerp(u, t.grad(p[AA + 1], x, y, z - 1), t.grad(p[BA + 1], x - 1, y, z - 1)), t.lerp(u, t.grad(p[AB + 1], x, y - 1, z - 1), t.grad(p[BB + 1], x - 1, y - 1, z - 1)))));
     };
-    return TextureBase;
+    return TB;
 }());
-var Texture = (function () {
-    function Texture(width, height) {
+var T = (function () {
+    function T(width, height) {
         var _this = this;
         this.width = width;
         this.height = height;
@@ -98,14 +101,14 @@ var Texture = (function () {
         this.ctx.fillStyle = "#000000";
         this.ctx.fillRect(0, 0, this.width, this.height);
         this.buffer = this.ctx.getImageData(0, 0, this.width, this.height);
-        this.helpers = new TextureBase();
+        this.helpers = new TB();
     }
-    Texture.createTexture = function (width, height, fn) {
-        var instance = new Texture(width, height);
+    T.createTexture = function (width, height, fn) {
+        var instance = new T(width, height);
         instance.render(fn);
         return instance.toBase64();
     };
-    Texture.prototype.render = function (fn) {
+    T.prototype.render = function (fn) {
         var buffer = this.buffer;
         var w = this.width, h = this.height;
         for (var idx, x = 0; x < w; x++) {
@@ -122,24 +125,24 @@ var Texture = (function () {
         }
         this.ctx.putImageData(buffer, 0, 0);
     };
-    Texture.prototype.toBase64 = function () {
+    T.prototype.toBase64 = function () {
         return this.ctx.canvas.toDataURL("image/png");
     };
-    return Texture;
+    return T;
 }());
-var TextureCanvas = (function (_super) {
-    __extends(TextureCanvas, _super);
-    function TextureCanvas(w, h) {
+var TC = (function (_super) {
+    __extends(TC, _super);
+    function TC(w, h) {
         return _super.call(this, w, h) || this;
     }
-    TextureCanvas.prototype.draw = function (fn) {
+    TC.prototype.draw = function (fn) {
         var res = fn.apply(this.helpers, [this.ctx, this.width, this, this.height]);
         return res;
     };
-    TextureCanvas.createTexture = function (width, height, fn) {
-        var instance = new TextureCanvas(width, height);
+    TC.createTexture = function (width, height, fn) {
+        var instance = new TC(width, height);
         instance.draw(fn);
         return instance.toBase64();
     };
-    return TextureCanvas;
-}(Texture));
+    return TC;
+}(T));
