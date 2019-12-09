@@ -10,7 +10,6 @@
   "author": "Magnus Thor",
   "license": "MIT",
   "devDependencies": {
-    "demolishedcompressor": "^1.0.3",
-    "google-closure-compiler": "^20190513.0.0"
+    "demolishedcompressor": "^1.0.3"
   }
 }

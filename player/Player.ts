@@ -1,5 +1,9 @@
-class P {
-  
+/**
+const canvasEl = document.querySelector("canvas");
+const canvas = ('OffscreenCanvas' in window) ? canvasEl.transferControlToOffscreen() : canvasEl;
+ * 
+ */
+class P {  
     // header for vertex and shader
     static h:string = `#version 300 es
     #ifdef GL_ES
@@ -8,11 +12,12 @@ class P {
     precision mediump sampler3D;
     #endif
     `;
-    static I(c: HTMLCanvasElement, v: string, f: string, x: number, y: number,
+    static I(q: any, v: string, f: string, x: number, y: number,
         b?: any, u?:Function,k?:any
     ) {
+        const c = ('OffscreenCanvas' in window) ? q.transferControlToOffscreen() : q;  
         let g =
-            c.getContext('webgl2') as any;
+            c.getContext('webgl2') as any
          // Hash WebGL method names into shorter once, will cause trouble i know
         for (var i in g)  g[i[0] + i[6]] = g[i];
             // {
@@ -22,7 +27,7 @@ class P {
         // due to duplicates, ensure we have this methods available until we have a better hash..        
         g.f1 = g.uniform1f;
         g.f2 = g.uniform2f;
-       // g.mm = g.generateMipmap;
+        g.mm = g.generateMipmap;
         g.i1 = g.uniform1i;
         
         let a = Object.keys(b ? b : {});
@@ -33,22 +38,22 @@ class P {
         g.ce(s);
         g.aS(p, s);
         // DEBUG if fails. 
-        if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
-            g.getShaderInfoLog(s).trim().split("\n").forEach((l: string) =>
-                console.error("[shader] " + l))
-            throw new Error("Error while compiling vertex")
-        };
-        // setup fragment
+        // if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
+        //     g.getShaderInfoLog(s).trim().split("\n").forEach((l: string) =>
+        //         console.error("[shader] " + l))
+        //     throw new Error("Error while compiling vertex")
+        // };
+        // // setup fragment
         s = g.cS(35632);
         g.sS(s, this.h + f);
         g.ce(s);
         g.aS(p, s);
         // DEBUG if fails.    
-        if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
-            g.getShaderInfoLog(s).trim().split("\n").forEach((l: string) =>
-                console.error("[shader] " + l))
-                throw new Error("Error while compiling fragment")
-        };
+        // if (!g.getShaderParameter(s, g.COMPILE_STATUS)) {
+        //     g.getShaderInfoLog(s).trim().split("\n").forEach((l: string) =>
+        //         console.error("[shader] " + l))
+        //         throw new Error("Error while compiling fragment")
+        // };
         g.lo(p);
         g.ug(p);
         g.bf(34962, g.cB());
@@ -58,8 +63,11 @@ class P {
         // setup and load textures if provided
         a.forEach((k) => {
             const m = new Image();
-            m.onload = () => {            
-                           }
+             m.onload = () => {        
+                g.bx(3553,  g.cT());	                           
+                g.tg(3553, 0, 6408, 512, 512, 0, 6408, 5121, m)	
+                g.generateMipmap(3553);    
+            }
             m.src = b[k].d;
         });
         const dt = () => performance.now() / 1000
